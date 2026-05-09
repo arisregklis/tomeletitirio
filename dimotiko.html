@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="light" lang="el"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#0e21a0",
+                    "on-primary": "#f8f0e5",
+                    "primary-fixed": "#d0d8f5",
+                    "primary-fixed-dim": "#a8b5e8",
+                    "on-primary-fixed": "#000e30",
+                    "on-primary-fixed-variant": "#0a1a55",
+                    "primary-container": "#0d1e8e",
+                    "on-primary-container": "#d0d8f5",
+                    "secondary": "#e5ad23",
+                    "on-secondary": "#262626",
+                    "secondary-fixed": "#f5e5a5",
+                    "secondary-fixed-dim": "#e5ad23",
+                    "on-secondary-fixed": "#2a1800",
+                    "on-secondary-fixed-variant": "#5a3a00",
+                    "secondary-container": "#f5e5a5",
+                    "on-secondary-container": "#0e21a0",
+                    "tertiary": "#b07800",
+                    "on-tertiary": "#f8f0e5",
+                    "tertiary-container": "#7a5200",
+                    "on-tertiary-container": "#f5e5a5",
+                    "tertiary-fixed": "#d0d8f5",
+                    "tertiary-fixed-dim": "#a8b5e8",
+                    "on-tertiary-fixed": "#000e30",
+                    "on-tertiary-fixed-variant": "#0a1a55",
+                    "background": "#f8f0e5",
+                    "on-background": "#262626",
+                    "surface": "#f8f0e5",
+                    "surface-bright": "#fdf8f0",
+                    "surface-dim": "#e8dece",
+                    "surface-tint": "#0e21a0",
+                    "surface-variant": "#e8dece",
+                    "on-surface": "#262626",
+                    "on-surface-variant": "#504538",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#fbf3ea",
+                    "surface-container": "#f2eadb",
+                    "surface-container-high": "#ece3d3",
+                    "surface-container-highest": "#e5dbcc",
+                    "outline": "#8a7a6a",
+                    "outline-variant": "#d8ccba",
+                    "inverse-surface": "#262626",
+                    "inverse-on-surface": "#f8f0e5",
+                    "inverse-primary": "#e5ad23",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "section-padding": "80px",
+                    "base": "8px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "label-md": ["Montserrat"],
+                    "headline-lg": ["Playfair Display"],
+                    "body-lg": ["Montserrat"],
+                    "headline-md": ["Playfair Display"],
+                    "body-md": ["Montserrat"],
+                    "headline-xl": ["Playfair Display"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .paper-stack {
+            box-shadow: 0 1px 1px rgba(0,0,0,0.05), 0 4px 0 -2px #f2eadb, 0 4px 1px -1px rgba(0,0,0,0.05), 0 8px 0 -4px #e5dbcc, 0 8px 1px -3px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-secondary-container">
+
+<!-- TopAppBar with Back Button -->
+<header class="sticky top-0 w-full z-50 border-b-2 border-b-secondary/40 bg-surface shadow-sm">
+    <nav class="flex justify-between items-center max-w-7xl mx-auto px-6 h-20 relative">
+        <div class="flex items-center">
+            <a href="website4.html#home">
+                <img src="Meletitirio_Logo_Square_3.png" alt="Μελετητήριο" class="h-20 w-auto"/>
+            </a>
+        </div>
+        <a href="website4.html#services" class="bg-primary-container text-on-primary-container px-5 py-2.5 rounded-lg font-label-md text-label-md font-bold hover:bg-primary-container/80 transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined">arrow_back</span>
+            Επιστροφή στις Υπηρεσίες
+        </a>
+    </nav>
+</header>
+
+<main>
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24 bg-surface-container-low">
+        <div class="container-max mx-auto px-gutter text-center">
+            <p class="font-label-md text-label-md text-secondary font-bold uppercase tracking-widest mb-4">Υπηρεσίες</p>
+            <h1 class="font-headline-xl text-headline-xl text-primary mb-6">Καθημερινή Μελέτη Δημοτικού</h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto">
+                Στο Μελετητήριό μας, πιστεύουμε πως η σωστή μελέτη είναι κάτι περισσότερο από την προετοιμασία της επόμενης μέρας. Είναι μία συνεχής πορεία κατανόησης, ενίσχυσης και ενδυνάμωσης. Δίπλα στα καθημερινά μαθήματα, εντάσσουμε επαναληπτικές ασκήσεις και στρατηγικές που βοηθούν κάθε παιδί να χτίσει γερά θεμέλια και αυτοπεποίθηση.
+            </p>
+        </div>
+    </section>
+
+    <!-- Wave: Hero → Features -->
+    <div style="position:relative; height:60px; background:#fbf3ea; overflow:hidden; margin-bottom:-1px; z-index:1;">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="position:absolute;bottom:0;left:0;width:100%;height:100%;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,30 C400,60 900,0 1440,35 L1440,60 L0,60 Z" fill="#f8f0e5"/>
+      </svg>
+    </div>
+    <!-- Features Section -->
+    <section class="py-16 md:py-24 bg-surface">
+        <div class="container-max mx-auto px-gutter">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1: Προετοιμασία & Ενίσχυση -->
+                <div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/30 shadow-lg hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center">
+                    <div class="w-20 h-20 bg-primary-fixed rounded-full flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-on-primary-fixed text-4xl">lightbulb</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md text-primary mb-3">Προετοιμασία &amp; Ενίσχυση</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Δεν μένουμε μόνο στα μαθήματα της επόμενης ημέρας. Με επαναληπτικές ασκήσεις και στρατηγικές ενίσχυσης, χτίζουμε γερά θεμέλια γνώσης.</p>
+                </div>
+
+                <!-- Feature 2: Εξατομικευμένο Πρόγραμμα -->
+                <div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/30 shadow-lg hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center">
+                    <div class="w-20 h-20 bg-secondary-fixed rounded-full flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-on-secondary-fixed text-4xl">diversity_3</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md text-primary mb-3">Εξατομικευμένο Πρόγραμμα</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Κάθε παιδί έχει τις δικές του ανάγκες. Προσαρμόζουμε τη μελέτη ώστε να είναι πραγματικά αποτελεσματική για τον κάθε μαθητή ξεχωριστά.</p>
+                </div>
+
+                <!-- Feature 3: Θετική Ψυχολογία -->
+                <div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/30 shadow-lg hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center">
+                    <div class="w-20 h-20 bg-primary-fixed rounded-full flex items-center justify-center mb-6">
+                        <span class="material-symbols-outlined text-on-primary-fixed text-4xl">mood</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md text-primary mb-3">Θετική Ψυχολογία</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Η ψυχολογία των παιδιών είναι για εμάς βασική προτεραιότητα. Φροντίζουμε να διατηρούμε ένα ευχάριστο και φιλικό περιβάλλον, όπου το διάβασμα γίνεται εμπειρία και όχι αγγαρεία.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wave: Features → Details -->
+    <div style="position:relative; height:60px; background:#f8f0e5; overflow:hidden; margin-bottom:-1px; z-index:1;">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="position:absolute;bottom:0;left:0;width:100%;height:100%;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,45 C300,5 750,65 1100,20 C1280,5 1380,48 1440,35 L1440,60 L0,60 Z" fill="#fbf3ea"/>
+      </svg>
+    </div>
+    <!-- Details Section -->
+    <section class="py-16 md:py-24 bg-surface-container-low">
+        <div class="container-max mx-auto px-gutter">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="rounded-2xl overflow-hidden shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1920" alt="Μαθητές που μελετούν χαρούμενα" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h2 class="font-headline-lg text-headline-lg text-primary mb-6">Η Δική μας Προσέγγιση:</h2>
+                    <ul class="space-y-5">
+                        <li class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+                            <span class="font-body-lg text-body-lg text-on-surface-variant">Επίβλεψη και καθοδήγηση από έμπειρους παιδαγωγούς.</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+                            <span class="font-body-lg text-body-lg text-on-surface-variant">Επαναληπτικά φυλλάδια και εκπαιδευτικό υλικό προσαρμοσμένο στις ανάγκες τους.</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+                            <span class="font-body-lg text-body-lg text-on-surface-variant">Τακτική επικοινωνία και ενημέρωση των γονέων για την πρόοδο του παιδιού.</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="material-symbols-outlined text-secondary mt-1">check_circle</span>
+                            <span class="font-body-lg text-body-lg text-on-surface-variant">Ένα ασφαλές και φιλικό περιβάλλον που ενθαρρύνει τη συνεργασία.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wave: Details → CTA -->
+    <div style="position:relative; height:70px; background:#fbf3ea; overflow:hidden; margin-bottom:-1px; z-index:1;">
+      <svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="position:absolute;bottom:0;left:0;width:100%;height:100%;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,55 C300,5 700,72 1100,22 C1250,8 1350,58 1440,48 L1440,70 L0,70 Z" fill="#f5e5a5"/>
+      </svg>
+    </div>
+    <!-- CTA Section -->
+    <section class="py-16 md:py-24 bg-secondary-container">
+        <div class="container-max mx-auto px-gutter text-center">
+            <h2 class="font-headline-lg text-headline-lg text-on-secondary-container mb-5">Ενδιαφέρεστε για τη Μελέτη Δημοτικού;</h2>
+            <p class="font-body-lg text-body-lg text-on-secondary-container/80 max-w-2xl mx-auto mb-8">Ελάτε να γνωριστούμε από κοντά. Είμαστε εδώ για να στηρίξουμε ουσιαστικά την καθημερινότητα κάθε παιδιού, με φροντίδα, οργάνωση και πολλή αγάπη για τη μάθηση.</p>
+            <a href="website4.html#registration" class="inline-block py-4 px-10 bg-secondary text-[#0e21a0] rounded-xl font-label-md text-label-md font-bold shadow-md hover:bg-[#f0bc35] transition-colors">
+                Εκδήλωση Ενδιαφέροντος
+            </a>
+        </div>
+    </section>
+</main>
+
+<!-- Wave: CTA → Footer -->
+<div style="position:relative; height:80px; background:#f5e5a5; overflow:hidden; margin-bottom:-1px; z-index:1;">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="position:absolute;bottom:0;left:0;width:100%;height:100%;" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,35 C180,75 550,0 900,48 C1100,78 1300,18 1440,52 L1440,80 L0,80 Z" fill="#0d1629"/>
+  </svg>
+</div>
+<!-- Footer -->
+<footer style="background: #0d1629; border-top: 3px solid rgba(229,173,35,0.45); padding: 72px 0 0;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px;" class="footer-grid">
+
+    <!-- Col 1: Brand -->
+    <div>
+      <a href="website4.html#home"><img src="Meletitirio_Logo_Square_3.png" alt="Μελετητήριο" style="height: 72px; width: auto; border-radius: 14px; margin-bottom: 20px; display: block;"/></a>
+      <p style="font-family: Montserrat, sans-serif; font-size: 0.875rem; line-height: 1.75; color: rgba(255,255,255,0.55); margin-bottom: 24px; max-width: 26rem;">
+        Εξειδικευμένο κέντρο μελέτης που στοχεύει στην ολόπλευρη ανάπτυξη των μαθητών μέσω σύγχρονων παιδαγωγικών μεθόδων.
+      </p>
+      <div style="display: flex; gap: 12px;">
+        <a href="tel:2130883995" style="display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 9px 16px; text-decoration: none; color: rgba(255,255,255,0.8); font-family: Montserrat, sans-serif; font-size: 0.8rem; font-weight: 600; transition: background 0.2s;">
+          <span class="material-symbols-outlined" style="font-size: 15px; color: #e5ad23;">call</span>
+          2130883995
+        </a>
+        <a href="https://maps.app.goo.gl/muvLVtRwdvK99EcNA" target="_blank" style="display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 9px 16px; text-decoration: none; color: rgba(255,255,255,0.8); font-family: Montserrat, sans-serif; font-size: 0.8rem; font-weight: 600; transition: background 0.2s;">
+          <span class="material-symbols-outlined" style="font-size: 15px; color: #e5ad23;">location_on</span>
+          Χάρτης
+        </a>
+      </div>
+    </div>
+
+    <!-- Col 2: Quick Links -->
+    <div>
+      <p style="font-family: Montserrat, sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #e5ad23; margin-bottom: 20px;">Γρήγοροι Σύνδεσμοι</p>
+      <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 13px;">
+        <li><a href="website4.html#services" style="font-family: Montserrat, sans-serif; font-size: 0.875rem; color: rgba(255,255,255,0.6); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'"><span style="width: 16px; height: 1px; background: rgba(229,173,35,0.5); display: inline-block; flex-shrink: 0;"></span>Υπηρεσίες</a></li>
+        <li><a href="website4.html#teachers" style="font-family: Montserrat, sans-serif; font-size: 0.875rem; color: rgba(255,255,255,0.6); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'"><span style="width: 16px; height: 1px; background: rgba(229,173,35,0.5); display: inline-block; flex-shrink: 0;"></span>Καθηγητές</a></li>
+        <li><a href="website4.html#registration" style="font-family: Montserrat, sans-serif; font-size: 0.875rem; color: rgba(255,255,255,0.6); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'"><span style="width: 16px; height: 1px; background: rgba(229,173,35,0.5); display: inline-block; flex-shrink: 0;"></span>Εγγραφή</a></li>
+        <li><a href="website4.html#contact" style="font-family: Montserrat, sans-serif; font-size: 0.875rem; color: rgba(255,255,255,0.6); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'"><span style="width: 16px; height: 1px; background: rgba(229,173,35,0.5); display: inline-block; flex-shrink: 0;"></span>Επικοινωνία</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Bottom bar -->
+  <div style="max-width: 1200px; margin: 56px auto 0; padding: 20px 40px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between;" class="footer-bottom">
+    <p style="font-family: Montserrat, sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.4); margin: 0;">© 2026 Φροντιστήριο Το Μελετητήριο. Ιωαννίνων 18, Άνω Χαλάνδρι.</p>
+    <p style="font-family: Montserrat, sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.4); margin: 0;">Τηλ: <a href="tel:2130883995" style="color: rgba(255,255,255,0.55); text-decoration: none;">2130883995</a></p>
+  </div>
+</footer>
+<style>
+  @media (max-width: 767px) {
+    .footer-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .footer-bottom { flex-direction: column; gap: 6px; text-align: center; }
+  }
+</style>
+
+</body></html>
