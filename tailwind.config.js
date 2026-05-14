@@ -68,11 +68,11 @@ module.exports = {
       },
       fontFamily: {
         "label-md": ["Montserrat"],
-        "headline-lg": ["Lora"],
+        "headline-lg": ["Cormorant Garamond"],
         "body-lg": ["Montserrat"],
-        "headline-md": ["Lora"],
+        "headline-md": ["Cormorant Garamond"],
         "body-md": ["Montserrat"],
-        "headline-xl": ["Lora"],
+        "headline-xl": ["Cormorant Garamond"],
       },
       fontSize: {
         "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "500" }],
