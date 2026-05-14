@@ -666,198 +666,142 @@ document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobil
 </div>
 <style>
   .tc-row {
-    display: flex;
-    gap: 14px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
     align-items: stretch;
-    overflow: visible;
   }
 
   .tc-card {
     position: relative;
-    flex: 0 0 110px;
-    height: 320px;
-    border-radius: 70px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: flex-basis 0.5s cubic-bezier(0.4,0,0.2,1),
-                border-radius 0.5s cubic-bezier(0.4,0,0.2,1);
+    background: #ffffff;
+    border: 1px solid rgba(14, 33, 160, 0.08);
+    border-radius: 24px;
+    min-height: 200px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(14, 33, 160, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
 
-  /* Expand on hover — wide oval instead of rectangle */
   .tc-card:hover {
-    flex-basis: 260px;
-    border-radius: 120px;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(14, 33, 160, 0.10);
+    border-color: rgba(229, 173, 35, 0.4);
   }
 
-  /* Slightly shrink siblings when one is hovered */
-  .tc-row:has(.tc-card:hover) .tc-card:not(:hover) {
-    flex-basis: 85px;
-  }
-
-  .tc-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    display: block;
-    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
-  }
-  .tc-card:hover img {
-    transform: scale(1.04);
-  }
-
-  /* Dark gradient overlay — only visible on hover */
-  .tc-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(13,30,142,0.85) 0%, rgba(27,53,196,0.2) 45%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .tc-card:hover .tc-overlay { opacity: 1; }
-
-  /* Text block — bottom left, hidden until hover */
   .tc-label {
-    position: absolute;
-    bottom: 28px;
-    left: 28px;
-    right: 28px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.35s ease 0.1s, transform 0.35s ease 0.1s;
-  }
-  .tc-card:hover .tc-label {
-    opacity: 1;
-    transform: translateY(0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
   }
 
   .tc-label-name {
     font-family: 'Playfair Display', serif;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    color: #ffffff;
-    margin: 0 0 5px;
-    line-height: 1.2;
-    white-space: nowrap;
+    color: #0e21a0;
+    margin: 0;
+    line-height: 1.25;
   }
   .tc-label-title {
     font-family: Montserrat, sans-serif;
     font-size: 0.72rem;
     font-weight: 600;
     color: #e5ad23;
-    margin: 0 0 10px;
-    white-space: nowrap;
+    margin: 0;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
   .tc-label-slogan {
     font-family: 'Playfair Display', serif;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     font-style: italic;
-    color: rgba(255,255,255,0.82);
-    line-height: 1.55;
-    margin: 0;
-    border-top: 1px solid rgba(255,255,255,0.2);
+    color: #504538;
+    line-height: 1.5;
+    margin: 8px 0 0;
+    border-top: 1px solid rgba(14, 33, 160, 0.10);
     padding-top: 10px;
   }
 
+  @media (max-width: 1023px) {
+    .tc-row { grid-template-columns: repeat(3, 1fr); }
+  }
   @media (max-width: 767px) {
-    .tc-row { flex-wrap: wrap; }
-    .tc-card { flex: 0 0 calc(50% - 7px) !important; height: 220px; }
-    .tc-card:hover { flex-basis: calc(50% - 7px) !important; }
-    .tc-label-name, .tc-label-title { white-space: normal; }
-    .tc-card--active .tc-overlay { opacity: 1; }
-    .tc-card--active .tc-label { opacity: 1; transform: translateY(0); }
-    .tc-card--active img { transform: scale(1.04); }
+    .tc-row { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .tc-card { min-height: 170px; padding: 22px 16px; border-radius: 20px; }
+    .tc-label-name { font-size: 1rem; }
   }
 </style>
 
 <div class="tc-row">
 
   <!-- Teacher 1 -->
-  <div class="tc-card" style="background:#b8cce0;">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8l8ihdfoCUfPFl1OFD-jbjREP79xm9CgQrAsjdQF0PwgzBSUN6CvFyH4Xt7W2PkoGQgdXfOeDO2cfYXcZCcTlA8378b2ySDKtAVNJwpNTF89jdU2ffgKXLza8uvX3gcq6WZQSBoCztsbFgC7hKCsEGmzdlw4egGCOx6Bm_B3bUFLTRX1by-139_hvpQewxQWvP96SJ-rt0kSaT03EkeNZG-M3n6JOi87ViRhWWKNzuTfjBa8ppDBtvDhbXEzTEVcFi4iOR5jeDl_n" alt="Ελένη Παππά" loading="lazy" decoding="async"/>
-    <div class="tc-overlay"></div>
+  <div class="tc-card">
     <div class="tc-label">
       <p class="tc-label-name">Ελένη Παππά</p>
       <p class="tc-label-title">Φιλόλογος · Υπεύθυνη Σπουδών</p>
-      <p class="tc-label-slogan">"Η παιδεία είναι ο δρόμος για την ελευθερία και την αυτογνωσία."</p>
     </div>
   </div>
 
   <!-- Teacher 2 -->
-  <div class="tc-card" style="background:#2c3e6b;">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwvP5RH0zHqcY5M_mks939T_TOU0J4PvQndLeQHmPw342wt9TeNX0RqWutBD9zqYBmRMidkvLyRn1k4oiWT8_566sQbCCvfo1XFt4mG4uVlUi6gPi4uyv0xPuKZH-Kbl7d7ZTzDGd9AWeCqpAfZVXIjfYCVmNMYVsY2bo2sCMC4tsT0_mFvLOfy36xcOd0SbRn2XUQzzxEtouJVL1jLCO2QQpKNQH9QPR-G2V42KDfRSPgQK7rRdrkmvFWJPO7q_0oRSzl4g9ho8wC" alt="Νίκος Παπαδόπουλος" loading="lazy" decoding="async"/>
-    <div class="tc-overlay"></div>
+  <div class="tc-card">
     <div class="tc-label">
       <p class="tc-label-name">Νίκος Παπαδόπουλος</p>
       <p class="tc-label-title">Μαθηματικός</p>
-      <p class="tc-label-slogan">"Τα μαθηματικά είναι η γλώσσα με την οποία γράφτηκε το σύμπαν."</p>
     </div>
   </div>
 
   <!-- Teacher 3 -->
-  <div class="tc-card" style="background:#d4a847;">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRFjonlm-T4IHKFuWb_PytDK6Zn3Pi0o8YstrJfHpbJIma6RhfcwCkuk1QayDQSOZGOdbMald4HUNPPEzUOIHAeKEyKnY3fqyahUGlvPd_GXaYkzMhUSBUjtZAMlHDZIty4Zvghzt1JQrBM0_22bIbMv4Qvelr8mKLO2G7BDCjXa82D8HHGT3wANyORV8Jg3v9FGFwdapmNb_KrZ8WsNr8C0gymf4Wkefs8eVyWVFPK9A_yZ9o1CBpjXY_btvbXKOjKt0P9lTQNhYR" alt="Μαρία Κωνσταντίνου" loading="lazy" decoding="async"/>
-    <div class="tc-overlay"></div>
+  <div class="tc-card">
     <div class="tc-label">
       <p class="tc-label-name">Μαρία Κωνσταντίνου</p>
       <p class="tc-label-title">Δασκάλα Δημοτικού</p>
-      <p class="tc-label-slogan">"Η αγάπη για το παιδί είναι το θεμέλιο κάθε επιτυχημένης μάθησης."</p>
     </div>
   </div>
 
   <!-- Teacher 4 -->
-  <div class="tc-card" style="background:#e8dece;">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8l8ihdfoCUfPFl1OFD-jbjREP79xm9CgQrAsjdQF0PwgzBSUN6CvFyH4Xt7W2PkoGQgdXfOeDO2cfYXcZCcTlA8378b2ySDKtAVNJwpNTF89jdU2ffgKXLza8uvX3gcq6WZQSBoCztsbFgC7hKCsEGmzdlw4egGCOx6Bm_B3bUFLTRX1by-139_hvpQewxQWvP96SJ-rt0kSaT03EkeNZG-M3n6JOi87ViRhWWKNzuTfjBa8ppDBtvDhbXEzTEVcFi4iOR5jeDl_n" alt="Σοφία Ανδρέου" loading="lazy" decoding="async"/>
-    <div class="tc-overlay"></div>
+  <div class="tc-card">
     <div class="tc-label">
       <p class="tc-label-name">Σοφία Ανδρέου</p>
       <p class="tc-label-title">Φιλόλογος</p>
-      <p class="tc-label-slogan">"Εμπνέουμε τους μαθητές να ανακαλύψουν τον κόσμο των λέξεων."</p>
     </div>
   </div>
 
   <!-- Teacher 5 -->
-  <div class="tc-card" style="background:#1a3a5c;">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwvP5RH0zHqcY5M_mks939T_TOU0J4PvQndLeQHmPw342wt9TeNX0RqWutBD9zqYBmRMidkvLyRn1k4oiWT8_566sQbCCvfo1XFt4mG4uVlUi6gPi4uyv0xPuKZH-Kbl7d7ZTzDGd9AWeCqpAfZVXIjfYCVmNMYVsY2bo2sCMC4tsT0_mFvLOfy36xcOd0SbRn2XUQzzxEtouJVL1jLCO2QQpKNQH9QPR-G2V42KDfRSPgQK7rRdrkmvFWJPO7q_0oRSzl4g9ho8wC" alt="Δημήτρης Αλεξίου" loading="lazy" decoding="async"/>
-    <div class="tc-overlay"></div>
+  <div class="tc-card">
     <div class="tc-label">
       <p class="tc-label-name">Δημήτρης Αλεξίου</p>
       <p class="tc-label-title">Φυσικός</p>
-      <p class="tc-label-slogan">"Η φυσική δεν είναι μόνο επιστήμη — είναι τρόπος σκέψης."</p>
     </div>
   </div>
 
   <!-- Teacher 6 -->
-  <div class="tc-card" style="background:#c07a3a;">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRFjonlm-T4IHKFuWb_PytDK6Zn3Pi0o8YstrJfHpbJIma6RhfcwCkuk1QayDQSOZGOdbMald4HUNPPEzUOIHAeKEyKnY3fqyahUGlvPd_GXaYkzMhUSBUjtZAMlHDZIty4Zvghzt1JQrBM0_22bIbMv4Qvelr8mKLO2G7BDCjXa82D8HHGT3wANyORV8Jg3v9FGFwdapmNb_KrZ8WsNr8C0gymf4Wkefs8eVyWVFPK9A_yZ9o1CBpjXY_btvbXKOjKt0P9lTQNhYR" alt="Άννα Γεωργίου" loading="lazy" decoding="async"/>
-    <div class="tc-overlay"></div>
+  <div class="tc-card">
     <div class="tc-label">
       <p class="tc-label-name">Άννα Γεωργίου</p>
       <p class="tc-label-title">Χημικός</p>
-      <p class="tc-label-slogan">"Πίσω από κάθε αντίδραση κρύβεται η ομορφιά της φύσης."</p>
     </div>
   </div>
 
   <!-- Teacher 7 -->
-  <div class="tc-card" style="background:#3d6b4a;">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwvP5RH0zHqcY5M_mks939T_TOU0J4PvQndLeQHmPw342wt9TeNX0RqWutBD9zqYBmRMidkvLyRn1k4oiWT8_566sQbCCvfo1XFt4mG4uVlUi6gPi4uyv0xPuKZH-Kbl7d7ZTzDGd9AWeCqpAfZVXIjfYCVmNMYVsY2bo2sCMC4tsT0_mFvLOfy36xcOd0SbRn2XUQzzxEtouJVL1jLCO2QQpKNQH9QPR-G2V42KDfRSPgQK7rRdrkmvFWJPO7q_0oRSzl4g9ho8wC" alt="Κώστας Παναγιώτου" loading="lazy" decoding="async"/>
-    <div class="tc-overlay"></div>
+  <div class="tc-card">
     <div class="tc-label">
       <p class="tc-label-name">Κώστας Παναγιώτου</p>
       <p class="tc-label-title">Καθηγητής Αγγλικών</p>
-      <p class="tc-label-slogan">"Κάθε γλώσσα που μαθαίνεις ανοίγει μια νέα πόρτα στον κόσμο."</p>
     </div>
   </div>
 
   <!-- Teacher 8 -->
-  <div class="tc-card" style="background:#6b3a7a;">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRFjonlm-T4IHKFuWb_PytDK6Zn3Pi0o8YstrJfHpbJIma6RhfcwCkuk1QayDQSOZGOdbMald4HUNPPEzUOIHAeKEyKnY3fqyahUGlvPd_GXaYkzMhUSBUjtZAMlHDZIty4Zvghzt1JQrBM0_22bIbMv4Qvelr8mKLO2G7BDCjXa82D8HHGT3wANyORV8Jg3v9FGFwdapmNb_KrZ8WsNr8C0gymf4Wkefs8eVyWVFPK9A_yZ9o1CBpjXY_btvbXKOjKt0P9lTQNhYR" alt="Ειρήνη Θεοδώρου" loading="lazy" decoding="async"/>
-    <div class="tc-overlay"></div>
+  <div class="tc-card">
     <div class="tc-label">
       <p class="tc-label-name">Ειρήνη Θεοδώρου</p>
       <p class="tc-label-title">Πληροφορική</p>
-      <p class="tc-label-slogan">"Η τεχνολογία είναι το εργαλείο — η φαντασία είναι η δύναμη."</p>
     </div>
   </div>
 
