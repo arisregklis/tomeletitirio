@@ -1073,60 +1073,85 @@ document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobil
 
 <script>
 (function () {
-  var GAP    = 24;
-  var SPEED  = 48; // px per second — slow, smooth
-  var cardW  = 0;
-  var oneSetW = 0;
-  var offset  = 0;
-  var paused  = false;
-  var lastTS  = null;
-
-  // Clone the original cards to create a seamless infinite loop
-  var track = document.getElementById('reviews-track');
-  var origCards = Array.prototype.slice.call(track.querySelectorAll('.rcard'));
-  var numCards = origCards.length;
-  origCards.forEach(function (c) { track.appendChild(c.cloneNode(true)); });
-
-  function calcLayout() {
-    var ow = document.getElementById('reviews-overflow').offsetWidth;
-    var vis = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
-    cardW   = (ow - GAP * (vis - 1)) / vis;
-    // One full set = numCards cards + numCards gaps
-    oneSetW = numCards * (cardW + GAP);
-    document.querySelectorAll('.rcard').forEach(function (c) { c.style.width = cardW + 'px'; });
-    if (offset >= oneSetW) offset = 0;
-    track.style.transform = 'translateX(-' + offset + 'px)';
-  }
-
-  var sectionVisible = true;
-
-  function tick(ts) {
-    if (!paused && sectionVisible) {
-      if (lastTS !== null) {
-        offset += SPEED * (ts - lastTS) / 1000;
-        if (offset >= oneSetW) offset -= oneSetW;
-        track.style.transform = 'translateX(-' + offset + 'px)';
-      }
-      lastTS = ts;
-    } else {
-      lastTS = null; // reset so resume has no jump
-    }
-    requestAnimationFrame(tick);
-  }
-
   var wrap = document.getElementById('reviews-wrapper');
-  wrap.addEventListener('mouseenter', function () { paused = true; });
-  wrap.addEventListener('mouseleave', function () { paused = false; });
+  if (!wrap) return;
 
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function(entries) {
-      sectionVisible = entries[0].isIntersecting;
-    }, { threshold: 0.1 }).observe(wrap);
+  function init() {
+    var GAP    = 24;
+    var SPEED  = 48; // px per second — slow, smooth
+    var cardW  = 0;
+    var oneSetW = 0;
+    var offset  = 0;
+    var paused  = false;
+    var lastTS  = null;
+    var sectionVisible = true;
+    var resizePending = false;
+
+    var track = document.getElementById('reviews-track');
+    var overflow = document.getElementById('reviews-overflow');
+    var origCards = Array.prototype.slice.call(track.querySelectorAll('.rcard'));
+    var numCards = origCards.length;
+    origCards.forEach(function (c) { track.appendChild(c.cloneNode(true)); });
+    var allCards = track.querySelectorAll('.rcard');
+
+    function calcLayout() {
+      var ow = overflow.offsetWidth;
+      var vis = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
+      cardW   = (ow - GAP * (vis - 1)) / vis;
+      oneSetW = numCards * (cardW + GAP);
+      var w = cardW + 'px';
+      for (var i = 0; i < allCards.length; i++) allCards[i].style.width = w;
+      if (offset >= oneSetW) offset = 0;
+      track.style.transform = 'translateX(-' + offset + 'px)';
+    }
+
+    function tick(ts) {
+      if (!paused && sectionVisible) {
+        if (lastTS !== null) {
+          offset += SPEED * (ts - lastTS) / 1000;
+          if (offset >= oneSetW) offset -= oneSetW;
+          track.style.transform = 'translateX(-' + offset + 'px)';
+        }
+        lastTS = ts;
+      } else {
+        lastTS = null;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    wrap.addEventListener('mouseenter', function () { paused = true; });
+    wrap.addEventListener('mouseleave', function () { paused = false; });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(entries) {
+        sectionVisible = entries[0].isIntersecting;
+      }, { threshold: 0.1 }).observe(wrap);
+    }
+
+    calcLayout();
+    requestAnimationFrame(tick);
+    window.addEventListener('resize', function () {
+      if (resizePending) return;
+      resizePending = true;
+      requestAnimationFrame(function () { resizePending = false; calcLayout(); });
+    });
   }
 
-  calcLayout();
-  requestAnimationFrame(tick);
-  window.addEventListener('resize', calcLayout);
+  // Defer init until the carousel approaches the viewport — avoids forcing
+  // a synchronous layout (offsetWidth) at parse time, which was blocking LCP.
+  if ('IntersectionObserver' in window) {
+    var initObserver = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        initObserver.disconnect();
+        init();
+      }
+    }, { rootMargin: '600px 0px' });
+    initObserver.observe(wrap);
+  } else if (window.requestIdleCallback) {
+    requestIdleCallback(init, { timeout: 2000 });
+  } else {
+    window.addEventListener('load', init);
+  }
 }());
 </script>
 
@@ -1508,125 +1533,127 @@ document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobil
 }());
 </script>
 
-<!-- Scroll Reveal Animations -->
+<!-- Scroll Reveal Animations — deferred past LCP, batched where possible -->
 <script>
 (function () {
-  gsap.registerPlugin(ScrollTrigger);
+  function init() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
 
-  /* ──────────────────────────────────────────────
-     1. SECTION HEADINGS — slide in from left
-  ────────────────────────────────────────────── */
-  gsap.utils.toArray('section h2').forEach(function (el) {
-    gsap.from(el, {
-      scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-      opacity: 0, x: -55, duration: 0.9, ease: 'power3.out'
+    /* 1. SECTION HEADINGS h2 — batched */
+    ScrollTrigger.batch('section h2', {
+      start: 'top 88%',
+      once: true,
+      onEnter: function (els) {
+        gsap.from(els, { opacity: 0, x: -55, duration: 0.9, ease: 'power3.out', stagger: 0.06 });
+      }
     });
-  });
 
-  gsap.utils.toArray('section h3').forEach(function (el) {
-    gsap.from(el, {
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-      opacity: 0, y: 28, duration: 0.7, ease: 'power3.out'
+    /* h3 — batched */
+    ScrollTrigger.batch('section h3', {
+      start: 'top 90%',
+      once: true,
+      onEnter: function (els) {
+        gsap.from(els, { opacity: 0, y: 28, duration: 0.7, ease: 'power3.out', stagger: 0.05 });
+      }
     });
-  });
 
-  /* ──────────────────────────────────────────────
-     2. GOLDEN DIVIDERS — draw from centre outward
-  ────────────────────────────────────────────── */
-  gsap.utils.toArray('section .w-20.h-1, section .w-24.h-1').forEach(function (el) {
-    gsap.from(el, {
-      scrollTrigger: { trigger: el, start: 'top 92%', once: true },
-      scaleX: 0, duration: 0.85, ease: 'expo.out', transformOrigin: 'center'
+    /* 2. GOLDEN DIVIDERS — batched */
+    ScrollTrigger.batch('section .w-20.h-1, section .w-24.h-1', {
+      start: 'top 92%',
+      once: true,
+      onEnter: function (els) {
+        gsap.from(els, { scaleX: 0, duration: 0.85, ease: 'expo.out', transformOrigin: 'center', stagger: 0.05 });
+      }
     });
-  });
 
-  /* ──────────────────────────────────────────────
-     3. IMAGES — curtain reveal directly on <img>
-     Only targets non-absolute images inside sections.
-     Skips: hero, header, teacher cards, carousel images.
-  ────────────────────────────────────────────── */
-  gsap.utils.toArray('section img').forEach(function (el) {
-    if (el.closest('#home') || el.closest('.tc-card')) return;
-    if (window.getComputedStyle(el).position === 'absolute') return;
-    var container = el.closest('[class*="rounded"]') || el.parentElement;
-    gsap.from(el, {
-      scrollTrigger: { trigger: container, start: 'top 88%', once: true },
-      clipPath: 'inset(100% 0 0 0)',
-      scale: 1.07,
-      duration: 1.15, ease: 'power3.inOut',
-      clearProps: 'clipPath,scale'
+    /* 3. IMAGES — curtain reveal (filtered: skip hero, teacher cards, absolute) */
+    var imgs = gsap.utils.toArray('section img').filter(function (el) {
+      if (el.closest('#home') || el.closest('.tc-card')) return false;
+      return window.getComputedStyle(el).position !== 'absolute';
     });
-  });
+    ScrollTrigger.batch(imgs, {
+      start: 'top 88%',
+      once: true,
+      onEnter: function (els) {
+        gsap.from(els, {
+          clipPath: 'inset(100% 0 0 0)',
+          scale: 1.07,
+          duration: 1.15, ease: 'power3.inOut',
+          clearProps: 'clipPath,scale',
+          stagger: 0.08
+        });
+      }
+    });
 
-  /* ──────────────────────────────────────────────
-     4. SERVICE IMAGES (right column container) — fade + scale
-     The individual svc-img-* are absolute, so animate the container.
-  ────────────────────────────────────────────── */
-  (function () {
-    /* right-column image wrapper: sibling of .services-arc-wrapper */
+    /* 4. SERVICE IMAGES (right column container) */
     var arcWrapper = document.querySelector('.services-arc-wrapper');
-    if (!arcWrapper) return;
-    var rightCol = arcWrapper.closest('.flex') && arcWrapper.closest('.flex').querySelector('[class*="w-5\\/12"]');
-    if (!rightCol) return;
-    gsap.from(rightCol, {
-      scrollTrigger: { trigger: rightCol, start: 'top 88%', once: true },
-      opacity: 0, x: 60, duration: 1.0, ease: 'power3.out'
-    });
-  }());
+    if (arcWrapper) {
+      var rightCol = arcWrapper.closest('.flex') && arcWrapper.closest('.flex').querySelector('[class*="w-5\\/12"]');
+      if (rightCol) {
+        gsap.from(rightCol, {
+          scrollTrigger: { trigger: rightCol, start: 'top 88%', once: true },
+          opacity: 0, x: 60, duration: 1.0, ease: 'power3.out'
+        });
+      }
+    }
 
-  /* ──────────────────────────────────────────────
-     5. TEACHER CARDS (.tc-card) — staggered scale bounce
-  ────────────────────────────────────────────── */
-  document.querySelectorAll('.tc-row').forEach(function (row) {
-    var cards = row.querySelectorAll('.tc-card');
-    gsap.from(cards, {
-      scrollTrigger: { trigger: row, start: 'top 84%', once: true },
-      opacity: 0, scale: 0.55, y: 70,
-      duration: 0.85, stagger: 0.09,
-      ease: 'back.out(1.7)',
-      clearProps: 'transform,opacity'
+    /* 5. TEACHER CARDS */
+    document.querySelectorAll('.tc-row').forEach(function (row) {
+      var cards = row.querySelectorAll('.tc-card');
+      gsap.from(cards, {
+        scrollTrigger: { trigger: row, start: 'top 84%', once: true },
+        opacity: 0, scale: 0.55, y: 70,
+        duration: 0.85, stagger: 0.09,
+        ease: 'back.out(1.7)',
+        clearProps: 'transform,opacity'
+      });
     });
-  });
 
-  /* ──────────────────────────────────────────────
-     6. SERVICE CARD WRAPPER — 3D perspective entrance
-  ────────────────────────────────────────────── */
-  (function () {
-    var wrapper = document.querySelector('.services-arc-wrapper');
-    if (!wrapper) return;
-    gsap.set(wrapper, { transformPerspective: 1000 });
-    gsap.from(wrapper, {
-      scrollTrigger: { trigger: wrapper, start: 'top 82%', once: true },
-      opacity: 0, y: 70, rotationX: 14,
-      duration: 1.0, ease: 'power3.out',
-      clearProps: 'transform,opacity'
+    /* 6. SERVICE CARD WRAPPER */
+    if (arcWrapper) {
+      gsap.set(arcWrapper, { transformPerspective: 1000 });
+      gsap.from(arcWrapper, {
+        scrollTrigger: { trigger: arcWrapper, start: 'top 82%', once: true },
+        opacity: 0, y: 70, rotationX: 14,
+        duration: 1.0, ease: 'power3.out',
+        clearProps: 'transform,opacity'
+      });
+    }
+
+    /* 7. PARAGRAPHS — batched (was the worst offender: ~30+ individual triggers) */
+    var paragraphs = gsap.utils.toArray('section p').filter(function (el) {
+      return !el.closest('#home');
     });
-  }());
-
-  /* ──────────────────────────────────────────────
-     7. PARAGRAPHS — gentle fade + drift up
-  ────────────────────────────────────────────── */
-  gsap.utils.toArray('section p').forEach(function (el) {
-    if (el.closest('#home')) return;
-    gsap.from(el, {
-      scrollTrigger: { trigger: el, start: 'top 94%', once: true },
-      opacity: 0, y: 22, duration: 0.65, ease: 'power2.out'
+    ScrollTrigger.batch(paragraphs, {
+      start: 'top 94%',
+      once: true,
+      onEnter: function (els) {
+        gsap.from(els, { opacity: 0, y: 22, duration: 0.65, ease: 'power2.out', stagger: 0.04 });
+      }
     });
-  });
 
-  /* ──────────────────────────────────────────────
-     8. REGISTRATION & CONTACT — scale-up entrance
-  ────────────────────────────────────────────── */
-  ['#registration > div:last-child', '#contact > div'].forEach(function (sel) {
-    var el = document.querySelector(sel);
-    if (!el) return;
-    gsap.from(el, {
-      scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-      opacity: 0, scale: 0.93, y: 40,
-      duration: 0.9, ease: 'power3.out'
+    /* 8. REGISTRATION & CONTACT */
+    ['#registration > div:last-child', '#contact > div'].forEach(function (sel) {
+      var el = document.querySelector(sel);
+      if (!el) return;
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+        opacity: 0, scale: 0.93, y: 40,
+        duration: 0.9, ease: 'power3.out'
+      });
     });
-  });
+  }
 
+  // Defer ScrollTrigger registration until after LCP. Each trigger reads
+  // bounding boxes at registration time, so running ~50 of these at parse
+  // time was costing ~121ms of main-thread work during initial paint.
+  function schedule() {
+    if (window.requestIdleCallback) requestIdleCallback(init, { timeout: 2000 });
+    else setTimeout(init, 0);
+  }
+  if (document.readyState === 'complete') schedule();
+  else window.addEventListener('load', schedule);
 }());
 </script>
 
